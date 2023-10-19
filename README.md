@@ -21,6 +21,6 @@
   </li>
 
   <li>Rode o sistema:<br>
-    <code>streamlit run Home.py</code>
+    <code>streamlit hello</code>
   </li>
 </ol>
