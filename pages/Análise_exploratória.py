@@ -68,20 +68,12 @@ if pagina_selecionada == "Análise geral":
 
     if __name__ == '__main__':
         main()
-
-
-
 elif pagina_selecionada == "Página 2":
-    #codigo vai aqui lembra do shift
-
-
-
-
+    pagina2()
+    #não esquecer do tab
 elif pagina_selecionada == "Página 3":
-    #codigo vai aqui lembra do shift
-
-
-
-
-elif pagina_selecionada == "Página 4":
-    #codigo vai aqui lembra do shift
+    pagina3()
+    #não esquecer do tab
+elif pagina_selecionada == "Página 3":
+    pagina4()
+    #não esquecer do tab
