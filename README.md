@@ -1,5 +1,21 @@
-# PISI3 - BSI - UFRPE
+# PISI3 - 2023.2 - BSI - UFRPE
 
+Repositório destinado para a disciplina Projeto Interdisciplinar para Sistemas de Informação III
+
+## Sobre
+
+
+Este artigo consiste em um aplicativo que ajuda entusiastas de filmes e séries a descobrir, avaliar e compartilhar recomendações personalizadas a partir de uma vasta base de dados da Netflix e Amazon Prime.
+
+## Grupo
+
+Autores:
+
+- Gustavo D. M. Moreira - (gustavo.moreira@ufrpe.br)
+- Luís H. G. da Silva - (luis.hgsilva@ufrpe.br)
+- Vinícius G. R. Cabral - (vinicius.grcabral@ufrpe.br)
+- João V. S. da Silva - (joao.vssilva5@ufrpe.br)
+ 
 ## Instalação:
 
 <ol>
