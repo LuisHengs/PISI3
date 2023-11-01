@@ -11,10 +11,10 @@ selected_dataset = st.selectbox('Escolha o dataset:', ['Netflix', 'Amazon Prime'
 
 # Carregar os datasets da Netflix e Amazon Prime
 if selected_dataset == 'Netflix':
-    data = pd.read_parquet('netflix_titles.parquet')
+    data = pd.read_parquet('data/netflix_titles.parquet')
     series_color = 'Séries'
 elif selected_dataset == 'Amazon Prime':
-    data = pd.read_parquet('amazon_prime_titles.parquet')
+    data = pd.read_parquet('data/amazon_prime_titles.parquet')
     series_color = 'Séries'
 
 # Análise de Filmes e Séries
@@ -39,8 +39,8 @@ st.plotly_chart(fig)
 st.subheader('Comparação entre os catálogos da Netflix e da Amazon Prime.')
 
 # Carregar os datasets da Netflix e Amazon Prime em formato Parquet
-netflix_data = pd.read_parquet('netflix_titles.parquet')
-amazon_data = pd.read_parquet('amazon_prime_titles.parquet')
+netflix_data = pd.read_parquet('data/netflix_titles.parquet')
+amazon_data = pd.read_parquet('data/amazon_prime_titles.parquet')
 
 # Filmes e Séries na Netflix
 num_filmes_netflix = len(netflix_data[netflix_data['type'] == 'Movie'])
