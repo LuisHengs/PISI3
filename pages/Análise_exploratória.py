@@ -8,7 +8,7 @@ import sweetviz as sv
 
 
 
-st.title('Análise exploratória dos Datasets.')
+st.title('Análise exploratória dos Datasets')
 st.subheader('Selecione a análise que você quer ver.')
 
 def pagina1():
@@ -26,7 +26,7 @@ def pagina4():
     st.title("Página 4 - Tópico D")
     st.write("Conteúdo relacionado ao tópico D")
 
-pagina_selecionada = st.selectbox("Selecione uma página", ("Análise geral", "Página 2", "Página 3", "Página 4"))
+pagina_selecionada = st.selectbox("Selecione uma análise", ("Análise geral", "Página 2", "Página 3", "Página 4"))
 
 if pagina_selecionada == "Análise geral":
     
@@ -68,7 +68,20 @@ if pagina_selecionada == "Análise geral":
 
     if __name__ == '__main__':
         main()
+
+
+
 elif pagina_selecionada == "Página 2":
-    pagina2()
+    #codigo vai aqui lembra do shift
+
+
+
+
 elif pagina_selecionada == "Página 3":
-    pagina3()
+    #codigo vai aqui lembra do shift
+
+
+
+
+elif pagina_selecionada == "Página 4":
+    #codigo vai aqui lembra do shift
