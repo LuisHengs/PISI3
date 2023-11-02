@@ -19,14 +19,14 @@ def pagina2():
     st.title("Análise quantitativa de filmes e séries.")
 
 def pagina3():
-    st.title("Página 3 - Tópico C")
-    st.write("Conteúdo relacionado ao tópico C")
+    st.title("Análise do tempo de duração de filmes e séries.")
+    
 
 def pagina4():
     st.title("Página 4 - Tópico D")
     st.write("Conteúdo relacionado ao tópico D")
 
-pagina_selecionada = st.selectbox("Selecione uma análise", ("Análise geral", "Análise quantitativa de filmes e séries.", "Página 3", "Página 4"))
+pagina_selecionada = st.selectbox("Selecione uma análise", ("Análise geral", "Análise quantitativa de filmes e séries.", "Análise tempo de duração.", "Página 4"))
 
 if pagina_selecionada == "Análise geral":
     
@@ -151,7 +151,7 @@ elif pagina_selecionada == "Análise quantitativa de filmes e séries.":
         st.plotly_chart(fig_comparison)
 
 
-elif pagina_selecionada == "Página 3":
+elif pagina_selecionada == "Análise duração":
         # Carregue os conjuntos de dados Parquet
     data_netflix = pd.read_parquet('data/netflix_titles.parquet')
     data_amazon_prime = pd.read_parquet('data/amazon_prime_titles.parquet')
