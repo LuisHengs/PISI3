@@ -24,30 +24,8 @@ Execute o projeto localmente
 
 - Instale o python
 - Entre no terminal e execute: ``python -m pip install --upgrade pip``
-- clone o repositório: https://github.com/LuisHengs/PISI3.git
+- clone o repositório: CTRL+SHIFT+P > Git:Clone > Clone from GitHub > https://github.com/LuisHengs/PISI3.git ou https://github.com/LuisHengs/PISI3.git
 - Execute ``pip install -r requirements.txt --upgrade`` para instalar e atualizar as bibliotecas necessárias
  Execute ``streamlit run Home.py`` para inciar o aplicativo.
-## Instalação:
 
-<ol>
-  <li>Efetue o clone do projeto: <code>CTRL+SHIFT+P > Git:Clone > Clone from GitHub > https://github.com/LuisHengs/PISI3.git</code></li>
-<li>Instale o python.</li>
-  
-  <li>Acesse a aba "Terminal" disponível na parte inferior do VSCode.</li>
-
-  <li>Execute a linha abaixo para criar um ambiente virtual do python para o projeto. Observe que a pasta <code>venv</code> está no <code>.gitignore</code>.<br>
-    <code>python -m venv venv</code>
-  </li>
-
-  <li>Atualize o pip:<br>
-    <code>python -m pip install --upgrade pip</code>
-  </li>
-
-  <li>Instale as libs necessárias para o projeto:<br>
-    <code>pip install -r requirements.txt --upgrade</code>
-  </li>
-
-  <li>Rode o sistema:<br>
-    <code>streamlit hello</code>
-  </li>
-</ol>
+## 
