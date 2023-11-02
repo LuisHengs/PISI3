@@ -7,7 +7,12 @@ def build_header():
              ''', unsafe_allow_html=True)
     
     st.write(f'''<p style='text-align: center'>
-            <br>Explore uma visão abrangente dos conjuntos de dados, incluindo estatísticas gerais, com insights provenientes dos dois conjuntos de dados: Netflix e Amazon Prime.<br></p>
+            <br>A produção de um modelo alternativo para recomendação de filmes e séries é uma abordagem que busca auxiliar a forma como conteúdos audiovisuais são sugeridos aos espectadores. Utilizando algoritmos de aprendizado de máquina e análise de dados, esse modelo considera as informações obtidas através do histórico de visualizações, para oferecer recomendações personalizadas.
+            <br>
+            <br>O objetivo é proporcionar uma plataforma que beneficie os usuários ao promover uma seleção de filmes e séries mais relevantes com base nas análises de dados do histórico de visualização, aumentando o engajamento dos espectadores e revelando conteúdos que poderiam passar despercebidos. A produção desse modelo representa um passo importante na otimização da experiência de entretenimento online.
+            <br>
+            <br>
+            Explore uma visão abrangente dos conjuntos de dados, incluindo estatísticas gerais, com insights provenientes dos dois conjuntos de dados: Netflix e Amazon Prime.<br></p>
             ''', unsafe_allow_html=True)
     st.markdown("---")
 
