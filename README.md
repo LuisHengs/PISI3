@@ -5,7 +5,7 @@ Repositório destinado para a disciplina Projeto Interdisciplinar para Sistemas 
 ## Sobre
 
 
-Este artigo consiste em um aplicativo que ajuda entusiastas de filmes e séries a descobrir, avaliar e compartilhar recomendações personalizadas a partir de uma vasta base de dados da Netflix e Amazon Prime.
+Este artigo consiste em um aplicativo que ajuda usuários de filmes e séries a descobrir, avaliar e compartilhar recomendações personalizadas a partir de uma vasta base de dados da Netflix e Amazon Prime.
 
 Artigo: [link](https://docs.google.com/document/d/1fUdGS6Wo8R-qeCo-WIEDvO3AfBKub0BZU_rJWtCTdC0/edit?usp=sharing)
 
