@@ -1,5 +1,6 @@
 import streamlit as st
 import pandas as pd
+import plotly.express as px
 
 def build_header():
     st.write(f'''<h1 style='text-align: center'>
@@ -9,10 +10,7 @@ def build_header():
     st.write(f'''<p style='text-align: center'>
             <br>A produção de um modelo alternativo para recomendação de filmes e séries é uma abordagem que busca auxiliar a forma como conteúdos audiovisuais são sugeridos aos espectadores. Utilizando algoritmos de aprendizado de máquina e análise de dados, esse modelo considera as informações obtidas através do histórico de visualizações, para oferecer recomendações personalizadas.
             <br>
-            <br>O objetivo é proporcionar uma plataforma que beneficie os usuários ao promover uma seleção de filmes e séries mais relevantes com base nas análises de dados do histórico de visualização, aumentando o engajamento dos espectadores e revelando conteúdos que poderiam passar despercebidos. A produção desse modelo representa um passo importante na otimização da experiência de entretenimento online.
-            <br>
-            <br>
-            Explore uma visão abrangente dos conjuntos de dados, incluindo estatísticas gerais, com insights provenientes dos dois conjuntos de dados: Netflix e Amazon Prime.<br></p>
+            <br>Explore uma visão abrangente dos conjuntos de dados, incluindo estatísticas gerais, com insights provenientes dos dois conjuntos de dados: Netflix e Amazon Prime.<br></p>
             ''', unsafe_allow_html=True)
     st.markdown("---")
 
@@ -24,6 +22,10 @@ def build_dataframes():
     container = st.container()
 
     tabela_dataframe_combined_data(container)
+
+    st.write(f'''<p style='text-align: center'>
+                 Os números refletem a magnitude dessa biblioteca virtual: um total de 18.475 filmes e séries, envolvendo um impressionante conjunto de 9.677 diretores e mais de 60.841 atores. Essas estatísticas proporcionam uma visão abrangente da riqueza e diversidade do catálogo disponível, destacando a grande quantidade de talentos que contribuíram para a produção desse vasto universo de entretenimento.<br><br></p>
+                 ''', unsafe_allow_html=True)
 
 def tabela_dataframe_combined_data(container):
     st.write(f'''<p style='text-align: center'>
@@ -48,6 +50,13 @@ def tabela_dataframe_combined_data(container):
     st.write(f"Quantidade total de filmes e séries: {total_movies}")
     st.write(f"Quantidade total de diretores: {total_directors}")
     st.write(f"Quantidade total de atores: {total_actors}")
+
+    labels = ["Quantidade total de filmes e séries", "Quantidade total de diretores", "Quantidade total de atores"]
+    values = [total_movies, total_directors, total_actors]
+
+    fig = px.pie(names=labels, values=values, title="Análise Geral dos Dados Combinados")
+    fig.update_traces(textinfo='percent+label')
+    st.plotly_chart(fig)
 
 build_header()
 build_dataframes()
