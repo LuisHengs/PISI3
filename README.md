@@ -17,7 +17,15 @@ Autores:
 - Luís H. G. da Silva - (luis.hgsilva@ufrpe.br)
 - Vinícius G. R. Cabral - (vinicius.grcabral@ufrpe.br)
 - João V. S. da Silva - (joao.vssilva5@ufrpe.br)
- 
+
+## Como executar o projeto
+
+Execute o projeto localmente
+
+- Instale o python
+- Entre no terminal e execute: ``python -m pip install --upgrade pip``
+- clone o repositório: 
+
 ## Instalação:
 
 <ol>
