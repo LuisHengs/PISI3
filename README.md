@@ -24,8 +24,9 @@ Execute o projeto localmente
 
 - Instale o python
 - Entre no terminal e execute: ``python -m pip install --upgrade pip``
-- clone o repositório: 
-
+- clone o repositório: https://github.com/LuisHengs/PISI3.git
+- Execute ``pip install -r requirements.txt --upgrade`` para instalar e atualizar as bibliotecas necessárias
+ Execute ``streamlit run Home.py`` para inciar o aplicativo.
 ## Instalação:
 
 <ol>
