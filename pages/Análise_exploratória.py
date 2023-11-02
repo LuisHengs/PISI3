@@ -186,12 +186,12 @@ elif pagina_selecionada == "Análise tempo de duração.":
 elif pagina_selecionada == "Análise com base nos gêneros":
     @st.cache_data
     def carregar_dataset_netflix():
-        data = pd.read_parquet("netflix_titles.parquet")
+        data = pd.read_parquet("data/netflix_titles.parquet")
         return data
 
     @st.cache_data
     def carregar_dataset_amazon():
-        data = pd.read_parquet("amazon_prime_titles.parquet")
+        data = pd.read_parquet("data/amazon_prime_titles.parquet")
         return data
 
     st.title("Distribuição de Filmes e Séries por Gênero")
