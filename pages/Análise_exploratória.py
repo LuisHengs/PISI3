@@ -151,7 +151,7 @@ elif pagina_selecionada == "Análise quantitativa de filmes e séries.":
         st.plotly_chart(fig_comparison)
 
 
-elif pagina_selecionada == "Análise duração":
+elif pagina_selecionada == "Análise tempo de duração.":
         # Carregue os conjuntos de dados Parquet
     data_netflix = pd.read_parquet('data/netflix_titles.parquet')
     data_amazon_prime = pd.read_parquet('data/amazon_prime_titles.parquet')
