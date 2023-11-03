@@ -4,5 +4,5 @@ scikit-learn==1.3.0
 streamlit
 ydata-profiling
 sweetviz
-streamlit-ydata-profiling
+streamlit-pandas-profiling
 matplotlib
