@@ -2,7 +2,7 @@ import streamlit as st
 import pandas as pd
 import codecs
 from ydata_profiling import ProfileReport
-from streamlit_ydata_profiling import st_profile_report
+from streamlit_pandas_profiling import st_profile_report
 import streamlit.components.v1 as components
 import sweetviz as sv
 import plotly.express as px
