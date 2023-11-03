@@ -4,7 +4,7 @@ import plotly.express as px
 
 def build_header():
     st.write(f'''<h1 style='text-align: center'>
-             Produção de um modelo alternativo para recomendação de filmes e séries..<br></h1>
+             Produção de um modelo alternativo para recomendação de filmes e séries.<br></h1>
              ''', unsafe_allow_html=True)
     
     st.write(f'''<p style='text-align: center'>
