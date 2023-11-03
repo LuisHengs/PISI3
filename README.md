@@ -28,4 +28,6 @@ Execute o projeto localmente
 - Execute ``pip install -r requirements.txt --upgrade`` para instalar e atualizar as bibliotecas necessárias
  Execute ``streamlit run Home.py`` para inciar o aplicativo.
 
-## 
+## Execução Remota do projeto
+
+[link](https://recomendacao-alternativa.streamlit.app/)
