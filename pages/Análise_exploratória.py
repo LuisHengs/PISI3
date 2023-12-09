@@ -35,7 +35,7 @@ if pagina_selecionada == "Análise geral":
 
     def main():
 
-        selected_dataset = st.selectbox('Escolha o dataset:', ['Netflix', 'Amazon Prime'])
+        selected_dataset = st.selectbox('Escolha o dataset:', ['Netflix', 'Amazon Prime', 'Netflix/Amazon Prime'])
 
         if selected_dataset == 'Netflix':
             data = pd.read_parquet('data/netflix_titles.parquet')
