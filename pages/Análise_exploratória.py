@@ -41,6 +41,8 @@ if pagina_selecionada == "Análise geral":
             data = pd.read_parquet('data/netflix_titles.parquet')
         elif selected_dataset == 'Amazon Prime':
             data = pd.read_parquet('data/amazon_prime_titles.parquet')
+        elif selected_dataset == 'Netflix/Amazon Prime':
+            data = pd.read_parquet('data/amazon-netflix_juntos.parquet')
 
         menu = ["Pandas Profile", "Sweetviz"]
         choice = st.selectbox("Escolha sua ferramenta de análise exploratória", menu)
