@@ -7,7 +7,7 @@ from sklearn.preprocessing import StandardScaler
 
 # Supondo que 'df' seja o seu DataFrame
 # Certifique-se de selecionar as colunas relevantes e normalizar os dados, se necessário
-df = pd.read_parquet('data/dados_amazonprime_com_5.parquet')
+df = pd.read_parquet('data/dados_netflix|amazon_5.parquet')
 
 # Selecionar colunas relevantes
 columns_to_normalize = ['ano_lancamento', 'duração', 'Filme/Série', 'Categoria', 'Generos']
