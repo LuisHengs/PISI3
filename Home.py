@@ -59,7 +59,6 @@ def tabela_dataframe_combined_data(container):
 def build_colaboradores():
     st.sidebar.markdown("<h2 style='text-align: center;'>Colaboradores</h2>", unsafe_allow_html=True)
     st.sidebar.markdown("- Vinícius Gabriel Rodrigues Cabral ([GitHub](https://github.com/Pr0chips))")
-    st.sidebar.markdown("- Gustavo de Melo Moreira ([GitHub](https://github.com/GustavoBSI))")
     st.sidebar.markdown("- Luis Henrique Gonçalves Dias ([GitHub](https://github.com/LuisHengs))")
     st.sidebar.markdown("- João Vitor Soares da Silva ([GitHub](https://github.com/Vitu3301))")
 
