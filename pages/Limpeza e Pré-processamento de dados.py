@@ -12,7 +12,6 @@ def load_datasets():
     df5 = pd.read_parquet('data/dados_netflix|amazon_5.parquet')
     return netflix_data, amazon_data, df1, df2, df3, df4, df5
 
-# Função para mostrar o DataFrame no Streamlit com opção de remover coluna
 def show_dataframe(dataframe, title, remove_columns=None):
     if remove_columns:
         # Verifica se as colunas existem antes de tentar removê-las
@@ -27,13 +26,10 @@ def show_dataframe(dataframe, title, remove_columns=None):
     st.subheader(title)
     st.dataframe(dataframe)
 
-# Configuração do Streamlit
 st.title('Visualização de Dados - Netflix e Amazon Prime')
 
-# Introdução
 st.write("Este aplicativo Streamlit visa demonstrar o processo de limpeza de dados e pré-processamento em conjuntos de dados da Netflix e Amazon Prime.")
 
-# Carregando Datasets
 netflix_data, amazon_data, df1, df2, df3, df4, df5 = load_datasets()
 
 # Mostrando Datasets Originais

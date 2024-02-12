@@ -5,18 +5,14 @@ from sklearn.cluster import KMeans
 from sklearn.metrics import silhouette_samples, silhouette_score
 from sklearn.preprocessing import StandardScaler
 
-# Supondo que 'df' seja o seu DataFrame
-# Certifique-se de selecionar as colunas relevantes e normalizar os dados, se necessário
-df = pd.read_parquet('data/dados_netflix|amazon_5.parquet')
 
-# Selecionar colunas relevantes
+df = pd.read_parquet('data/dados_netflix|amazon_5.parquet')
 columns_to_normalize = ['ano_lancamento', 'duração', 'Filme/Série', 'Categoria', 'Generos']
 
-# Normalizar as colunas selecionadas
+
 X = df[columns_to_normalize]
 X_scaled = StandardScaler().fit_transform(X)
 
-# Análise do Cotovelo
 st.title('Análise do Cotovelo e Silhueta com Streamlit')
 
 # Range de possíveis números de clusters
@@ -58,7 +54,6 @@ ax2.plot(range_n_clusters, silhouette_avg_values, marker='s', color='tab:red', l
 ax2.set_ylabel('Pontuação de Silhueta Média', color='tab:red')
 ax2.tick_params(axis='y', labelcolor='tab:red')
 
-# Adicionar marcadores ao Streamlit
 st.pyplot(fig)
 
 
