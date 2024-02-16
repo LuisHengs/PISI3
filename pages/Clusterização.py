@@ -1,119 +1,108 @@
 import streamlit as st
-import pandas as pd
-import plotly.express as px
-import plotly.graph_objects as go
-from sklearn.preprocessing import StandardScaler
 from sklearn.cluster import KMeans
-from sklearn.impute import SimpleImputer
-from nltk.corpus import stopwords
-from nltk.tokenize import word_tokenize
+from sklearn.preprocessing import StandardScaler, MinMaxScaler
+from scipy.spatial.distance import euclidean
+import pandas as pd
+import seaborn as sns
+import matplotlib.pyplot as plt
+from itertools import combinations
 
-# Função para pré-processamento
-def preprocess_data(df):
-    # Tratamento de dados ausentes
-    df.fillna({'director': df['director'].mode()[0]}, inplace=True)
 
-    # Transformação de dados categóricos (One-Hot Encoding)
-    df_encoded = pd.get_dummies(df, columns=['type', 'country', 'rating'], prefix=['type', 'country', 'rating'])
+def carregar_dados():
+    df = pd.read_parquet("data/dados_netflix|amazon_5.parquet")
+    return df
 
-    # Pré-processamento de texto (remoção de stopwords)
-    stop_words = set(stopwords.words('english'))
-    df_encoded['description'] = df_encoded['description'].apply(lambda x: ' '.join([word for word in word_tokenize(x) if word.lower() not in stop_words]))
+def pre_processamento(dados, colunas_selecionadas, normalizar):
 
-    # Feature Engineering (extração do ano da coluna 'date_added')
-    df_encoded['year_added'] = pd.to_datetime(df_encoded['date_added'], errors='coerce').dt.year
+    if not colunas_selecionadas:
+        colunas_selecionadas = dados.columns.tolist()
 
-    # Tratamento da coluna 'duration' (extrair valores numéricos)
-    df_encoded['duration'] = pd.to_numeric(df_encoded['duration'].str.extract('(\d+)', expand=False), errors='coerce')
+    colunas_selecionadas = ['Filme/Série', 'ano_lancamento', 'Categoria', 'duração', 'Generos']
+    dados_selecionados = dados[colunas_selecionadas].copy()
 
-    # Normalização/Padronização
-    scaler = StandardScaler()
-    df_encoded[['release_year_scaled', 'duration_scaled']] = scaler.fit_transform(df_encoded[['release_year', 'duration']])
-    return df_encoded
+    dados_numericos = dados_selecionados.select_dtypes(include=['float64', 'int64'])
+    dados_categoricos = dados_selecionados.select_dtypes(include=['object'])
 
-# Função para aplicar clustering
-def apply_clustering(df_encoded, num_clusters):
-    # Selecionar features para clustering
-    features_for_clustering = ['release_year_scaled', 'duration_scaled']
+    if normalizar:
+        scaler = MinMaxScaler()
+    else:
+        scaler = StandardScaler()
 
-    # Selecionar apenas as features relevantes
-    df_cluster = df_encoded[features_for_clustering]
+    dados_numericos_processados = scaler.fit_transform(dados_numericos)
+    dados_numericos_processados = pd.DataFrame(dados_numericos_processados, columns=dados_numericos.columns)
+    dados_processados = pd.concat([dados_numericos_processados, dados_categoricos.reset_index(drop=True)], axis=1)
 
-    # Aplicar padronização
-    scaler = StandardScaler()
-    df_cluster_scaled = scaler.fit_transform(df_cluster)
+    return dados_processados
 
-    # Imputar valores ausentes
-    imputer = SimpleImputer(strategy='mean')
-    df_cluster_scaled_imputed = imputer.fit_transform(df_cluster_scaled)
+def calcular_distancia_entre_clusters(centros_clusters):
+    num_clusters = len(centros_clusters)
+    distancias = []
 
-    # Aplicar K-Means
-    kmeans = KMeans(n_clusters=num_clusters, random_state=42)
-    df_encoded['cluster'] = kmeans.fit_predict(df_cluster_scaled_imputed)
+    for i in range(num_clusters):
+        for j in range(i + 1, num_clusters):
+            distancia = euclidean(centros_clusters[i], centros_clusters[j])
+            distancias.append(f'Distância entre Cluster {i} e Cluster {j}: {distancia:.4f}')
 
-    return df_encoded
+    return distancias
 
-# Função fictícia para criar um gráfico de dispersão com base nos resultados do clustering
-def create_scatter_plot(df, num_clusters):
-    fig = px.scatter(df, x='release_year_scaled', y='duration_scaled', color='cluster',
-                     title=f'Scatter Plot (K-Means, {num_clusters} clusters)',
-                     labels={'release_year_scaled': 'Ano de Lançamento Padronizado',
-                             'duration_scaled': 'Duração Padronizada'})
-    return fig
+def plotar_grafico_dispersao(dados, coluna_x, coluna_y, coluna_hue):
+    plt.figure(figsize=(10, 6))
+    sns.scatterplot(data=dados, x=coluna_x, y=coluna_y, hue=coluna_hue, palette='tab20', s=50, alpha=1.0, edgecolor='w', linewidth=0.5)
+    plt.title(f'{coluna_x} vs {coluna_y}', fontsize=8)
+    plt.xlabel(coluna_x, fontsize=6)
+    plt.ylabel(coluna_y, fontsize=6)
+    plt.legend(title=coluna_hue, bbox_to_anchor=(1.05, 1), loc='upper left', fontsize=10)
+    plt.tick_params(axis='both', labelsize=10)
+    plt.grid(True, linestyle='--', alpha=1.0)
+    st.pyplot(plt.gcf())
 
-# Função fictícia para criar um box plot com base nos resultados do clustering
-def create_box_plot(df, num_clusters):
-    fig = go.Figure()
-    for cluster in range(num_clusters):
-        cluster_data = df[df['cluster'] == cluster]
-        fig.add_trace(go.Box(y=cluster_data['duration_scaled'], name=f'Cluster {cluster}'))
 
-    fig.update_layout(title=f'Box Plot (K-Means, {num_clusters} clusters)',
-                      xaxis_title='Cluster',
-                      yaxis_title='Duração Padronizada')
+def main():
+    st.title("Clusterização")
 
-    return fig
+    # Carregar dados
+    dados = carregar_dados()
 
-# Título do aplicativo
-st.title("Carregamento, Pré-Processamento e Clustering de Conjunto de Dados com Streamlit")
+    colunas_selecionadas = ['Filme/Série', 'ano_lancamento', 'Categoria', 'duração', 'Generos']
 
-# Seção para upload do arquivo
-st.sidebar.header("Upload do Conjunto de Dados")
-uploaded_file = st.sidebar.file_uploader("Escolha um arquivo Parquet", type=["parquet"])
+    # Escolha entre normalização e padronização
+    normalizar_dados = st.checkbox("Normalizar dados")
 
-# Seção para seleção do número de clusters e tipo de gráfico
-num_clusters = st.sidebar.slider("Número de Clusters", min_value=2, max_value=10, value=3)
-chart_type = st.sidebar.selectbox("Tipo de Gráfico", ['scatter', 'box'])  # Adicione outros tipos de gráfico conforme necessário
+    dados_processados = pre_processamento(dados, colunas_selecionadas, normalizar_dados)
 
-# Verificar se um arquivo foi carregado
-if uploaded_file is not None:
-    # Carregar o conjunto de dados em um DataFrame
-    df = pd.read_parquet(uploaded_file)
+    # Escolha do número de clusters (K)
+    numero_clusters = st.slider("Escolha o número de clusters (K)", 5, 45, 5)
 
-    # Exibir as primeiras linhas do DataFrame original
-    st.write("*Conjunto de Dados Original:*")
-    st.write(df.head())
+    # Aplicação do K-means
+    kmeans = KMeans(n_clusters=numero_clusters, random_state=42)
+    kmeans.fit(dados_processados)
+    rotulos_clusters = kmeans.labels_
+    centros_clusters = kmeans.cluster_centers_
 
-    # Pré-processar o conjunto de dados
-    df_encoded = preprocess_data(df)
+    dados_resultado = dados[['titulo']].copy()
+    dados_resultado['Clusters'] = rotulos_clusters
 
-    # Exibir as primeiras linhas do DataFrame pré-processado
-    st.write("*Conjunto de Dados Pré-Processado:*")
-    st.write(df_encoded.head())
+    colunas_centros = dados_processados.columns.tolist()
+    dados_centros = pd.DataFrame(centros_clusters, columns=colunas_centros)
 
-    # Aplicar clustering
-    df_encoded = apply_clustering(df_encoded, num_clusters)
+    # Calcular e exibir a distância entre os clusters
+    distancias_entre_clusters = calcular_distancia_entre_clusters(centros_clusters)
+    
+    # Exibir resultados
+    st.subheader("Resultados da Clusterização:")
+    st.write("Resultados com Títulos e Rótulos dos Clusters:", dados_resultado)
+    st.write("Centros dos Clusters:", dados_centros)
+    st.subheader("Distância entre Clusters:")
+    st.write(distancias_entre_clusters)
 
-    # Exibir as primeiras linhas do DataFrame com as informações de clustering
-    st.write("*Conjunto de Dados com Informações de Clustering:*")
-    st.write(df_encoded.head())
+    # Plotar gráfico de dispersão para cada combinação de colunas
+    st.subheader("Gráficos de Dispersão dos Clusters:")
+    for col1, col2 in combinations(dados_processados.columns, 2):
+        plotar_grafico_dispersao(pd.concat([dados_resultado, dados_processados], axis=1), col1, col2, 'Clusters')
+    
+    # Plotar gráfico de dispersão para a coluna 'Clusters'
+    st.subheader("Gráfico de Dispersão para 'Clusters':")
+    plotar_grafico_dispersao(dados_resultado, 'Clusters', 'Clusters', 'Clusters')
 
-    # Escolher e exibir o tipo de gráfico
-    if chart_type == 'scatter':
-        st.plotly_chart(create_scatter_plot(df_encoded, num_clusters))
-    elif chart_type == 'box':
-        st.plotly_chart(create_box_plot(df_encoded, num_clusters))
-
-    # Continuar com análises adicionais conforme necessário
-else:
-    st.info("Por favor, faça o upload de um arquivo Parquet.")
+if __name__ == "__main__":
+    main()
