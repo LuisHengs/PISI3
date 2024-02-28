@@ -81,3 +81,6 @@ def main():
     colors = np.random.rand(100)
     area = (30 * np.random.rand(100))**2  # Tamanhos dos pontos
     labels = model.predict(X)[:100]  # Prever classes para os primeiros 100 pontos
+
+    fig, ax = plt.subplots()
+    scatter = ax.scatter(x, y, c=colors, s=area, cmap='viridis', alpha=0.5)
