@@ -6,3 +6,5 @@ ydata-profiling
 sweetviz
 streamlit-pandas-profiling
 matplotlib
+numpy
+seaborn
