@@ -87,3 +87,7 @@ def main():
     legend = ax.legend(*scatter.legend_elements(), loc="upper right", title="Classes")
     ax.add_artist(legend)
     st.pyplot(fig)
+
+# Executar a aplicação Streamlit
+if __name__ == '__main__':
+    main()
