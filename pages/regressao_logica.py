@@ -61,3 +61,6 @@ def main():
     ])
 
     model.fit(X_train, y_train)
+
+    # Fazer previsões
+    y_pred = model.predict(X_test)
