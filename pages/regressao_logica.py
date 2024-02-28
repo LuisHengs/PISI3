@@ -79,3 +79,5 @@ def main():
     x = np.random.normal(size=100)
     y = np.random.normal(size=100)
     colors = np.random.rand(100)
+    area = (30 * np.random.rand(100))**2  # Tamanhos dos pontos
+    labels = model.predict(X)[:100]  # Prever classes para os primeiros 100 pontos
