@@ -12,11 +12,11 @@ import numpy as np
 
 # Função para carregar os dados
 def load_data():
-    # Carregue seus dados aqui, por exemplo, a partir de um arquivo CSV
+    # Carregue seus dados aqui, por exemplo, a partir de um arquivo parquet
     data = pd.read_parquet('dados_netflix_amazon_5.parquet')
     return data
     
-# Função principal para a aplicação Streamlit
+# Função principal
 def main():
     st.title('Regressão Logística com Streamlit')
 
@@ -28,7 +28,7 @@ def main():
     
     # Pré-processamento dos dados
     X = data_copy[['id', 'titulo', 'diretor', 'elenco', 'pais', 'data_adicao', 'ano_lancamento', 'duracao', 'descricao']]
-    y = data_copy['classificacao']  # Substitua 'alvo' pelo nome da sua coluna alvo
+    y = data_copy['classificacao']  
 
     # Converter colunas categóricas em numéricas
     label_encoder = LabelEncoder()
