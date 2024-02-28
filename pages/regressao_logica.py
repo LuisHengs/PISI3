@@ -84,3 +84,6 @@ def main():
 
     fig, ax = plt.subplots()
     scatter = ax.scatter(x, y, c=colors, s=area, cmap='viridis', alpha=0.5)
+    legend = ax.legend(*scatter.legend_elements(), loc="upper right", title="Classes")
+    ax.add_artist(legend)
+    st.pyplot(fig)
