@@ -50,3 +50,6 @@ def main():
     classes_to_remove = class_counts[class_counts < min_samples].index
     X = X[~y.isin(classes_to_remove)]
     y = y[~y.isin(classes_to_remove)]
+
+    # Dividir os dados em conjuntos de treinamento e teste com amostragem estratificada
+    X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=42, stratify=y)
