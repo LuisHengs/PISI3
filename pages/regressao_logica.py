@@ -15,3 +15,13 @@ def load_data():
     # Carregue seus dados aqui, por exemplo, a partir de um arquivo CSV
     data = pd.read_parquet('dados_netflix_amazon_5.parquet')
     return data
+    
+# Função principal para a aplicação Streamlit
+def main():
+    st.title('Regressão Logística com Streamlit')
+
+    # Carregar os dados
+    data = load_data()
+
+    # Fazer uma cópia dos dados
+    data_copy = data.copy()
