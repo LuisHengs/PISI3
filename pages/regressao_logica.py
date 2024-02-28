@@ -73,3 +73,9 @@ def main():
     confusion_matrix_result = confusion_matrix(y_test, y_pred)
     st.write("Matriz de Confusão:")
     st.write(confusion_matrix_result)
+
+    # Plotar gráfico de dispersão com classificação
+    np.random.seed(0)
+    x = np.random.normal(size=100)
+    y = np.random.normal(size=100)
+    colors = np.random.rand(100)
