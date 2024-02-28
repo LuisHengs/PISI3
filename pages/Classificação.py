@@ -9,7 +9,7 @@ import seaborn as sns
 
 # Carregar o dataset em formato parquet
 # Substitua 'merged_dataset.parquet' pelo nome real do seu arquivo parquet
-merged_data = pd.read_parquet('dados_amazonprime_com_5.parquet')
+merged_data = pd.read_parquet('dados_netflix|amazon_5.parquet')
 
 # Adicionar título
 st.title('Classificação de Filmes e Séries baseada no Algoritmo k-NN')
