@@ -25,3 +25,14 @@ def main():
 
     # Fazer uma cópia dos dados
     data_copy = data.copy()
+    
+    # Pré-processamento dos dados
+    X = data_copy[['id', 'titulo', 'diretor', 'elenco', 'pais', 'data_adicao', 'ano_lancamento', 'duracao', 'descricao']]
+    y = data_copy['classificacao']  # Substitua 'alvo' pelo nome da sua coluna alvo
+
+    # Converter colunas categóricas em numéricas
+    label_encoder = LabelEncoder()
+    X['titulo'] = label_encoder.fit_transform(X['titulo'])
+    X['diretor'] = label_encoder.fit_transform(X['diretor'])
+    X['elenco'] = label_encoder.fit_transform(X['elenco'])
+    X['pais'] = label_encoder.fit_transform(X['pais'])
