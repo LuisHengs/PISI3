@@ -40,3 +40,7 @@ def main():
     # Remover observações com valores não numéricos na coluna 'duracao'
     X['duracao'] = pd.to_numeric(X['duracao'].str.replace(' min', ''), errors='coerce')
     X.dropna(subset=['duracao'], inplace=True)
+
+    # Redefinir y após a remoção das amostras inválidas
+    y = data_copy.loc[X.index, 'classificacao']
+
