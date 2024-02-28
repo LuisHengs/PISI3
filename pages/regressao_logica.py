@@ -36,3 +36,7 @@ def main():
     X['diretor'] = label_encoder.fit_transform(X['diretor'])
     X['elenco'] = label_encoder.fit_transform(X['elenco'])
     X['pais'] = label_encoder.fit_transform(X['pais'])
+
+    # Remover observações com valores não numéricos na coluna 'duracao'
+    X['duracao'] = pd.to_numeric(X['duracao'].str.replace(' min', ''), errors='coerce')
+    X.dropna(subset=['duracao'], inplace=True)
