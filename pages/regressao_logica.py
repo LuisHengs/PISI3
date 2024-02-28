@@ -68,3 +68,8 @@ def main():
     # Avaliar o modelo
     accuracy = accuracy_score(y_test, y_pred)
     st.write("Acurácia:", accuracy)
+
+    # Exibir a matriz de confusão
+    confusion_matrix_result = confusion_matrix(y_test, y_pred)
+    st.write("Matriz de Confusão:")
+    st.write(confusion_matrix_result)
