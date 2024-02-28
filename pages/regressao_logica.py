@@ -53,3 +53,11 @@ def main():
 
     # Dividir os dados em conjuntos de treinamento e teste com amostragem estratificada
     X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=42, stratify=y)
+
+    # Construir e treinar o modelo
+    model = Pipeline([
+        ('scaler', ColumnTransformer([('scaler', StandardScaler(), [6, 7])])),
+        ('logistic_regression', LogisticRegression())
+    ])
+
+    model.fit(X_train, y_train)
