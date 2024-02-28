@@ -64,3 +64,7 @@ def main():
 
     # Fazer previsões
     y_pred = model.predict(X_test)
+
+    # Avaliar o modelo
+    accuracy = accuracy_score(y_test, y_pred)
+    st.write("Acurácia:", accuracy)
