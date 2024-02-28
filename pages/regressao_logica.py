@@ -44,3 +44,9 @@ def main():
     # Redefinir y após a remoção das amostras inválidas
     y = data_copy.loc[X.index, 'classificacao']
 
+    # Remover classes com poucas amostras
+    class_counts = y.value_counts()
+    min_samples = 10
+    classes_to_remove = class_counts[class_counts < min_samples].index
+    X = X[~y.isin(classes_to_remove)]
+    y = y[~y.isin(classes_to_remove)]
