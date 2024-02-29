@@ -79,7 +79,7 @@ def main():
     rotulos_clusters = kmeans.labels_
     centros_clusters = kmeans.cluster_centers_
 
-    dados_resultado = dados[['titulo']].copy()
+    dados_resultado = dados[['titulo', 'categoria', 'classificacao', 'duracao']].copy()
     dados_resultado['Clusters'] = rotulos_clusters
 
     colunas_centros = dados_processados.columns.tolist()
