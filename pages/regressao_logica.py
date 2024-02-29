@@ -13,12 +13,12 @@ import numpy as np
 # Função para carregar os dados
 def load_data():
     # Carregue seus dados aqui, por exemplo, a partir de um arquivo parquet
-    data = pd.read_parquet('dados_netflix|amazon_5.parquet')
+    data = pd.read_parquet("dados_netflix|amazon_5.parquet")
     return data
     
 # Função principal
 def main():
-    st.title('Regressão Logística com Streamlit')
+    st.title('Regressão Logística')
 
     # Carregar os dados
     data = load_data()
@@ -30,13 +30,7 @@ def main():
     X = data_copy[['id', 'titulo', 'diretor', 'elenco', 'pais', 'data_adicao', 'ano_lancamento', 'duracao', 'descricao']]
     y = data_copy['classificacao']  
 
-    # Converter colunas categóricas em numéricas
-    label_encoder = LabelEncoder()
-    X['titulo'] = label_encoder.fit_transform(X['titulo'])
-    X['diretor'] = label_encoder.fit_transform(X['diretor'])
-    X['elenco'] = label_encoder.fit_transform(X['elenco'])
-    X['pais'] = label_encoder.fit_transform(X['pais'])
-
+   
     # Remover observações com valores não numéricos na coluna 'duracao'
     X['duracao'] = pd.to_numeric(X['duracao'].str.replace(' min', ''), errors='coerce')
     X.dropna(subset=['duracao'], inplace=True)
