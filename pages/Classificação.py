@@ -9,7 +9,7 @@ import seaborn as sns
 
 # Carregar o dataset em formato parquet
 # Substitua 'merged_dataset.parquet' pelo nome real do seu arquivo parquet
-merged_data = pd.read_parquet('data/dados_netflix|amazon_5.parquet')
+merged_data = pd.read_parquet('dados_amazonprime_com_5.parquet')
 
 # Adicionar título
 st.title('Classificação de Filmes e Séries baseada no Algoritmo k-NN')
@@ -45,18 +45,9 @@ sns.scatterplot(x='Generos', y='ano_lancamento', hue='encoded_genre', data=merge
 plt.title('Classificação por Gêneros usando k-NN')
 plt.xlabel('Generos')
 plt.ylabel('Ano de Lançamento')
-
-# Substituir os rótulos da legenda diretamente
-plt.legend(
-    title='Genre Name',
-    labels=['TV Shows', "Kid's", 'Drama', 'Comedy', 'Documentaries', 'Children & Family Movies', 'Romantic Movies'],
-    loc='upper right',
-    bbox_to_anchor=(1.25, 1)
-)
-
+plt.legend(title='Encoded Genre', loc='upper right', bbox_to_anchor=(1.25, 1))
 fig = plt.gcf()  # Obter a referência para a figura atual
 st.pyplot(fig)
-
 
 # Adicionar opções interativas para sugestões de filmes
 service_streaming = st.selectbox('Selecione o Serviço de Streaming:', ['Netflix', 'Amazon Prime Video'])
@@ -74,10 +65,17 @@ if not filtered_data_title.empty:
     genre_code = filtered_data_title.iloc[0]['encoded_genre']
     release_year = filtered_data_title.iloc[0]['ano_lancamento']
     
+    # Amostrar até 5, garantindo pelo menos 1 por título
     same_genre_and_year_movies = merged_data[
         (merged_data['encoded_genre'] == genre_code) &
         (merged_data['ano_lancamento'] == release_year)
-    ].sample(n=5, replace=False, random_state=42)
+    ]
+    num_matching_elements = len(same_genre_and_year_movies)
+    if num_matching_elements > 0:
+        sample_size = min(5, num_matching_elements)  # Garantir que não estamos amostrando mais do que disponível
+        same_genre_and_year_movies = same_genre_and_year_movies.sample(n=sample_size, replace=False, random_state=42)
+    else:
+        st.warning("Não há elementos suficientes para amostrar.")
 
     st.write("Filmes/Séries do Mesmo Gênero e Mesmo Ano de Lançamento:")
     st.write(same_genre_and_year_movies[['titulo', 'Generos', 'ano_lancamento']])
