@@ -5,31 +5,53 @@ import matplotlib.pyplot as plt
 from sklearn.metrics import confusion_matrix, accuracy_score, precision_score, recall_score, f1_score
 from sklearn.model_selection import train_test_split, GridSearchCV
 from sklearn.tree import DecisionTreeClassifier
+from sklearn.preprocessing import MinMaxScaler, StandardScaler
+from sklearn.neighbors import KNeighborsClassifier
 import joblib
 
-def treinar_avaliar_modelo(X_train, y_train, X_test, y_test, otimizar_hiperparametros=False):
+def treinar_avaliar_modelo(X_train, y_train, X_test, y_test, otimizar_hiperparametros=False, normalize=None, modelo_escolhido='Decision Tree'):
+    scaler = MinMaxScaler() if normalize == 'Min-Max' else StandardScaler() if normalize == 'Standard' else None
+
+    if scaler:
+        X_train = scaler.fit_transform(X_train)
+        X_test = scaler.transform(X_test)
+
     if otimizar_hiperparametros:
-        # Definir a grade de hiperparâmetros reduzida
-        param_grid = {
-            'max_depth': [None, 10, 20],
-            'min_samples_split': [2, 5, 10],
-            'min_samples_leaf': [1, 2, 4]
-        }
+        if modelo_escolhido == 'Decision Tree':
+            param_grid = {
+                'max_depth': [None, 10, 20],
+                'min_samples_split': [2, 5, 10],
+                'min_samples_leaf': [1, 2, 4]
+            }
 
-        modelo = DecisionTreeClassifier()
+            modelo = DecisionTreeClassifier()
+        elif modelo_escolhido == 'KNN':
+            param_grid = {
+                'n_neighbors': [3, 5, 7],
+                'weights': ['uniform', 'distance'],
+                'p': [1, 2]
+            }
 
-        # Criar o objeto GridSearchCV
+            modelo = KNeighborsClassifier()
+
         grid_search = GridSearchCV(modelo, param_grid, cv=5, scoring='accuracy')
 
-        # Ajustar o modelo aos dados
         grid_search.fit(X_train, y_train)
 
         melhores_hiperparametros = grid_search.best_params_
         st.write("Melhores Hiperparâmetros:", melhores_hiperparametros)
 
-        modelo_otimizado = DecisionTreeClassifier(**melhores_hiperparametros)
+        modelo_otimizado = DecisionTreeClassifier(**melhores_hiperparametros) if modelo_escolhido == 'Decision Tree' else KNeighborsClassifier(**melhores_hiperparametros)
 
         modelo_otimizado.fit(X_train, y_train)
+
+        importancias_otimizado = modelo_otimizado.feature_importances_ if modelo_escolhido == 'Decision Tree' else None
+
+        if modelo_escolhido == 'Decision Tree':
+            st.write("### Importância das Features (Modelo Otimizado)")
+            for coluna, importancia in zip(colunas_selecionadas, importancias_otimizado):
+                importancia_percentual = (importancia / importancias_otimizado.sum()) * 100
+                st.write(f"{coluna}: {importancia_percentual:.2f}%")
 
         y_pred_otimizado = modelo_otimizado.predict(X_test)
 
@@ -56,14 +78,23 @@ def treinar_avaliar_modelo(X_train, y_train, X_test, y_test, otimizar_hiperparam
         st.pyplot(fig_otimizado)
 
         st.write("### Métricas de Avaliação (Modelo Otimizado)")
-        st.write(f"Acurácia (A): {acuracia_otimizado:.4f}")
-        st.write(f"Precisão (P): {precisao_otimizado:.4f}")
-        st.write(f"Recall (R): {recall_otimizado:.4f}")
-        st.write(f"F1-Score (F1): {f1_otimizado:.4f}")
+        st.write(f"Acurácia (A): {acuracia_otimizado * 100:.2f}%")
+        st.write(f"Precisão (P): {precisao_otimizado * 100:.2f}%")
+        st.write(f"Recall (R): {recall_otimizado * 100:.2f}%")
+        st.write(f"F1-Score (F1): {f1_otimizado * 100:.2f}%")
 
-    modelo_nao_otimizado = DecisionTreeClassifier()
+    modelo_nao_otimizado = DecisionTreeClassifier() if modelo_escolhido == 'Decision Tree' else KNeighborsClassifier()
 
     modelo_nao_otimizado.fit(X_train, y_train)
+
+    # Obtendo a importância das features no modelo não otimizado
+    importancias_nao_otimizado = modelo_nao_otimizado.feature_importances_ if modelo_escolhido == 'Decision Tree' else None
+
+    if modelo_escolhido == 'Decision Tree':
+        st.write("### Importância das Features (Modelo Não Otimizado)")
+        for coluna, importancia in zip(colunas_selecionadas, importancias_nao_otimizado):
+            importancia_percentual = (importancia / importancias_nao_otimizado.sum()) * 100
+            st.write(f"{coluna}: {importancia_percentual:.2f}%")
 
     y_pred_nao_otimizado = modelo_nao_otimizado.predict(X_test)
 
@@ -77,10 +108,10 @@ def treinar_avaliar_modelo(X_train, y_train, X_test, y_test, otimizar_hiperparam
     st.pyplot(fig_nao_otimizado)
 
     st.write("### Métricas de Avaliação (Modelo Não Otimizado)")
-    st.write(f"Acurácia (A): {acuracia_nao_otimizado:.4f}")
-    st.write(f"Precisão (P): {precisao_nao_otimizado:.4f}")
-    st.write(f"Recall (R): {recall_nao_otimizado:.4f}")
-    st.write(f"F1-Score (F1): {f1_nao_otimizado:.4f}")
+    st.write(f"Acurácia (A): {acuracia_nao_otimizado * 100:.2f}%")
+    st.write(f"Precisão (P): {precisao_nao_otimizado * 100:.2f}%")
+    st.write(f"Recall (R): {recall_nao_otimizado * 100:.2f}%")
+    st.write(f"F1-Score (F1): {f1_nao_otimizado * 100:.2f}%")
 
 def avaliar_modelo(y_true, y_pred):
     cm = confusion_matrix(y_true, y_pred)
@@ -102,6 +133,10 @@ colunas_selecionadas = st.multiselect('Selecione até 4 colunas:', colunas_prede
 if len(colunas_selecionadas) > 5:
     st.warning("Você selecionou mais de 4 colunas. Apenas as primeiras 4 serão analisadas.")
 
+normalize = st.selectbox('Escolha a normalização:', ['Nenhuma', 'Min-Max', 'Standard'])
+
+modelo_escolhido = st.selectbox('Escolha o modelo:', ['Decision Tree', 'KNN'])
+
 st.write("### Avaliação do Modelo")
 
 X = df[colunas_selecionadas].dropna()
@@ -111,4 +146,4 @@ X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_
 
 otimizar_hiperparametros = st.checkbox('Otimizar Hiperparâmetros')
 
-treinar_avaliar_modelo(X_train, y_train, X_test, y_test, otimizar_hiperparametros)
+treinar_avaliar_modelo(X_train, y_train, X_test, y_test, otimizar_hiperparametros, normalize, modelo_escolhido)
