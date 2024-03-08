@@ -169,7 +169,7 @@ def avaliar_modelo(y_true, y_pred):
     return cm, acuracia, precisao, recall, f1
 
 # Carregar dados
-df = pd.read_parquet('dados_netflix_amazon_5.parquet')
+df = pd.read_parquet('data/dados_netflix|amazon_5.parquet')
 
 # Lista de colunas predefinidas
 colunas_predefinidas = ['Filme/Série','Generos', 'duração', 'ano_lancamento']
