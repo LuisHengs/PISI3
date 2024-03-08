@@ -85,10 +85,11 @@ def treinar_avaliar_modelo(X_train, y_train, X_test, y_test, otimizar_hiperparam
        # Exibir importância das características para o modelo otimizado
         st.write("### Importância das Características (Modelo Otimizado XGBoost)")
 
-        # Utilizando a função plot_importance do XGBoost para visualizar a importância das características
-        fig_otimizado, ax_otimizado = plt.subplots(figsize=(8, 6))
-        plot_importance(modelo_otimizado, importance_type='weight', xlabel='Contagem', ax=ax_otimizado)
-        st.pyplot(fig_otimizado)
+       # Utilizando a função plot_importance do XGBoost para visualizar a importância das características
+        fig, ax = plt.subplots()
+        plot_importance(modelo_otimizado, importance_type='weight', xlabel='Contagem')
+        st.pyplot(fig)
+
 
         # Adicionar texto com as porcentagens abaixo do último gráfico
         st.write("### Feature Importance (Não Otimizado):")
