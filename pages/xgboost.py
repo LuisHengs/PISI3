@@ -4,7 +4,7 @@ from sklearn.model_selection import train_test_split
 from sklearn.metrics import confusion_matrix, accuracy_score, precision_score, recall_score, f1_score
 import matplotlib.pyplot as plt
 import seaborn as sns
-from xgboost import XGBClassifier
+from xgboost import XGBClassifier, plot_importance
 import joblib
 from sklearn.model_selection import GridSearchCV
 
