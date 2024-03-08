@@ -152,7 +152,6 @@ def treinar_avaliar_modelo(X_train, y_train, X_test, y_test, otimizar_hiperparam
         plot_importance(modelo_nao_otimizado, importance_type='weight', xlabel='Contagem')
         st.pyplot()
 
-        st.set_option('deprecation.showPyplotGlobalUse', False)
         
 
 # Função para avaliar modelos
@@ -169,7 +168,7 @@ def avaliar_modelo(y_true, y_pred):
     return cm, acuracia, precisao, recall, f1
 
 # Carregar dados
-df = pd.read_parquet('dados_netflix_amazon_5.parquet')
+df = pd.read_parquet('data/dados_netflix|amazon_5.parquet')
 
 # Lista de colunas predefinidas
 colunas_predefinidas = ['Filme/Série','Generos', 'duração', 'ano_lancamento']
@@ -203,5 +202,4 @@ otimizar_hiperparametros = st.checkbox('Otimizar Hiperparâmetros')
 # Avaliar e exibir os modelos
 treinar_avaliar_modelo(X_train, y_train, X_test, y_test, otimizar_hiperparametros)
 
-st.set_option('deprecation.showPyplotGlobalUse', False)
 
