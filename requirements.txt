@@ -8,3 +8,4 @@ streamlit-pandas-profiling
 matplotlib
 numpy
 seaborn
+xgboost
