@@ -8,4 +8,4 @@ streamlit-pandas-profiling
 matplotlib
 numpy
 seaborn
-xgboost==1.5.1
+xgboost
